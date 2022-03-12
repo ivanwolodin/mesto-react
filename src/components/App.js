@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import Header from "./Header";
 import Main from "./Main";
@@ -7,15 +7,40 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 function App() {
+    const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+    const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+    const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+
+    function handleEditAvatarClick() {
+        setEditAvatarPopupOpen(true);
+    }
+
+    function handleEditProfileClick() {
+        setEditProfilePopupOpen(true);
+    }
+
+    function handleAddPlaceClick() {
+        setAddPlacePopupOpen(true);
+    }
+
+    function closeAllPopups(){
+        setEditAvatarPopupOpen(false);
+        setEditProfilePopupOpen(false);
+        setAddPlacePopupOpen(false);
+    }
+
     return (
         <div className="root">
             <div className="page">
                 <Header/>
-                <Main/>
+                <Main onEditProfile={handleEditProfileClick}
+                      onAddPlace={handleAddPlaceClick}
+                      onEditAvatar={handleEditAvatarClick}/>
                 <Footer/>
                 <PopupWithForm title={'Редактировать профиль'}
                                name={'popup_profile'}
-
+                               isPopupOpen={isEditProfilePopupOpen ? "popup_opened" : ""}
+                               closePopup={closeAllPopups}
                                children={
                                    <>
                                        <input className="popup__subtitle popup__subtitle_type_name popup__input"
@@ -37,6 +62,8 @@ function App() {
                 </PopupWithForm>
                 <PopupWithForm title={'Новое место'}
                                name={'popup_image'}
+                               isPopupOpen={isAddPlacePopupOpen ? "popup_opened" : ""}
+                               closePopup={closeAllPopups}
                                children={
                                    <>
                                        <input className="popup__subtitle popup__subtitle_type_image popup__input"
@@ -52,12 +79,12 @@ function App() {
                                            Создать
                                        </button>
                                    </>
-                               }
-                >
-
+                               }>
                 </PopupWithForm>
                 <PopupWithForm title={'Обновить аватар'}
                                name={'popup_avatar'}
+                               isPopupOpen={isEditAvatarPopupOpen ? "popup_opened" : ""}
+                               closePopup={closeAllPopups}
                                children={
                                    <>
                                        <input className="popup__subtitle popup__subtitle_type_link popup__input"
@@ -70,10 +97,10 @@ function App() {
                                        </button>
                                    </>
                                }>
-
                 </PopupWithForm>
                 <PopupWithForm title={'Вы уверены?'}
                                name={'popup_delete_card'}
+                               closePopup={closeAllPopups}
                                children={
                                    <>
                                        <button className="popup__button" type="submit">
