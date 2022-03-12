@@ -1,0 +1,8 @@
+.element__delete-icon-part1 {
+  position: relative;
+  background-repeat: repeat;
+  background-size: cover;
+  width: 18px;
+  height: 4.42px;
+  background: url(../../../images/delete_icon-part1.svg);
+}
