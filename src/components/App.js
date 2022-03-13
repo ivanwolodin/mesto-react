@@ -5,7 +5,6 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
-import {api} from "../utils/Api";
 
 function App() {
 
@@ -116,24 +115,6 @@ function App() {
                 <ImagePopup/>
             </div>
 
-            <template className="elements-cards">
-                <li className="element">
-                    <article>
-                        <img className="element__image" src="#" alt=""/>
-                        <div className="element__info">
-                            <h2 className="element__name"/>
-                            <div className="element__like-section">
-                                <button className="element__like-button"/>
-                                <div className="element__like-counter"> 0</div>
-                            </div>
-                        </div>
-                        <div className="element__delete-icon">
-                            <div className="element__delete-icon-part1"/>
-                            <div className="element__delete-icon-part2"/>
-                        </div>
-                    </article>
-                </li>
-            </template>
         </div>
     );
 }
