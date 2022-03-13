@@ -1,6 +1,6 @@
 @import url(vendor/normalize.css);
 
-@import url(fonts/inter.css);
+@import url(vendor/fonts/inter.css);
 
 @import url(blocks/root/root.css);
 
@@ -28,8 +28,6 @@
 @import url(blocks/element/__like-button/_liked/element__like-button_liked.css);
 @import url(blocks/element/__name/element__name.css);
 @import url(blocks/element/__delete-icon/element__delete-icon.css);
-@import url(blocks/element/__delete-icon-part1/element__delete-icon-part1.css);
-@import url(blocks/element/__delete-icon-part2/element__delete-icon-part2.css);
 @import url(blocks/element/__like-section/element__like-section.css);
 @import url(blocks/element/__like-counter/element__like-counter.css);
 

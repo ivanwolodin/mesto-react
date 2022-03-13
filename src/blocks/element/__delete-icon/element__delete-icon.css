@@ -2,5 +2,8 @@
   position: absolute;
   top: 20px;
   right: 20px;
+  width: 18px;
+  height: 19px;
   cursor: pointer;
+  background: url(../../../images/Trash.svg);
 }
