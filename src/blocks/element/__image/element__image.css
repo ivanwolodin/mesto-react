@@ -1,0 +1,8 @@
+.element__image {
+  width: 282px;
+  height: 282px;
+  background-repeat: repeat;
+  background-size: contain;
+  cursor: pointer;
+  display: block;
+}
