@@ -5,8 +5,11 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import {api} from "../utils/Api";
 
 function App() {
+
+
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
@@ -23,7 +26,7 @@ function App() {
         setAddPlacePopupOpen(true);
     }
 
-    function closeAllPopups(){
+    function closeAllPopups() {
         setEditAvatarPopupOpen(false);
         setEditProfilePopupOpen(false);
         setAddPlacePopupOpen(false);
@@ -35,7 +38,8 @@ function App() {
                 <Header/>
                 <Main onEditProfile={handleEditProfileClick}
                       onAddPlace={handleAddPlaceClick}
-                      onEditAvatar={handleEditAvatarClick}/>
+                      onEditAvatar={handleEditAvatarClick}
+                />
                 <Footer/>
                 <PopupWithForm title={'Редактировать профиль'}
                                name={'popup_profile'}
