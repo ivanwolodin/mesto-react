@@ -8,10 +8,11 @@ import ImagePopup from "./ImagePopup";
 
 function App() {
 
-
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+
+    const [selectedCard, setSelectedCard] = useState('');
 
     function handleEditAvatarClick() {
         setEditAvatarPopupOpen(true);
@@ -25,10 +26,18 @@ function App() {
         setAddPlacePopupOpen(true);
     }
 
+    function handleCardClick(card) {
+        // console.log('Handle ca');
+        // console.log(card.name);
+        setSelectedCard(card);
+    }
+
     function closeAllPopups() {
         setEditAvatarPopupOpen(false);
         setEditProfilePopupOpen(false);
         setAddPlacePopupOpen(false);
+
+        setSelectedCard('');
     }
 
     return (
@@ -38,6 +47,7 @@ function App() {
                 <Main onEditProfile={handleEditProfileClick}
                       onAddPlace={handleAddPlaceClick}
                       onEditAvatar={handleEditAvatarClick}
+                      onCardClick={handleCardClick}
                 />
                 <Footer/>
                 <PopupWithForm title={'Редактировать профиль'}
@@ -112,7 +122,10 @@ function App() {
                                    </>
                                }>
                 </PopupWithForm>
-                <ImagePopup/>
+                <ImagePopup selectedCard={selectedCard}
+                            onClose={closeAllPopups}
+                            isPopupOpen={selectedCard !== "" ? "popup_opened" : ""}
+                />
             </div>
 
         </div>
