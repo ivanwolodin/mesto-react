@@ -27,8 +27,6 @@ function App() {
     }
 
     function handleCardClick(card) {
-        // console.log('Handle ca');
-        // console.log(card.name);
         setSelectedCard(card);
     }
 

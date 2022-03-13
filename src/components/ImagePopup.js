@@ -1,8 +1,6 @@
 import React from "react";
 
 function ImagePopup({selectedCard, onClose, isPopupOpen}) {
-    console.log('selected:');
-    console.log(selectedCard);
     return (
         <>
             <div className={`popup popup_pic ${isPopupOpen}`}>
