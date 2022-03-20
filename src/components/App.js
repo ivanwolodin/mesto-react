@@ -1,12 +1,38 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import {api} from "../utils/api";
+import {userContext} from "../context/CurrentUserContext";
 
 function App() {
+
+    const [currentUser, setCurrentUser] = useState({
+        name: 'Jaque',
+        profession: 'Physicist',
+        avatarUrl: ''
+    });
+
+    useEffect(() => {
+        api.getUserInfo()
+            .then((userData) => {
+                setCurrentUser(
+                    {
+                        name: userData.name,
+                        profession: userData.about,
+                        avatarUrl: userData.avatar
+                    }
+                )
+            })
+            .catch((err) => {
+                console.log("Cannot get data from server");
+                console.log(err);
+            });
+
+    }, []);
 
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
@@ -42,11 +68,13 @@ function App() {
         <div className="root">
             <div className="page">
                 <Header/>
-                <Main onEditProfile={handleEditProfileClick}
-                      onAddPlace={handleAddPlaceClick}
-                      onEditAvatar={handleEditAvatarClick}
-                      onCardClick={handleCardClick}
-                />
+                <userContext.Provider value={currentUser}>
+                    <Main onEditProfile={handleEditProfileClick}
+                          onAddPlace={handleAddPlaceClick}
+                          onEditAvatar={handleEditAvatarClick}
+                          onCardClick={handleCardClick}
+                    />
+                </userContext.Provider>
                 <Footer/>
                 <PopupWithForm title='Редактировать профиль'
                                name='popup_profile'
@@ -108,11 +136,11 @@ function App() {
                                name='popup_delete_card'
                                closePopup={closeAllPopups}
                                submitButton='Да'
-                               >
+                >
                 </PopupWithForm>
                 <ImagePopup selectedCard={selectedCard}
                             onClose={closeAllPopups}
-                            isPopupOpen={Object.keys(selectedCard).length !== 0  ? "popup_opened" : ""}
+                            isPopupOpen={Object.keys(selectedCard).length !== 0 ? "popup_opened" : ""}
                 />
             </div>
 
