@@ -1,23 +1,13 @@
 import React, {useState, useEffect, useContext} from "react";
 import {userContext} from "../context/CurrentUserContext";
+import {cardsContext} from "../context/CardsContext";
 
 import Card from "./Card";
-import {api} from "../utils/api";
+
 
 function Main(props) {
-    const [cards, setCards] = useState([]);
     const currentUser = useContext(userContext);
-
-    useEffect(() => {
-        api.getInitialCards()
-            .then((cards) => {
-                setCards(cards);
-            })
-            .catch((err) => {
-                console.log("Cannot get data from server");
-                console.log(err);
-            });
-    }, []);
+    const cards = useContext(cardsContext);
 
     return (
         <main className="content">

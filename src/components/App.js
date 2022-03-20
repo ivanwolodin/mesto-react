@@ -7,6 +7,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import {api} from "../utils/api";
 import {userContext} from "../context/CurrentUserContext";
+import {cardsContext} from "../context/CardsContext";
 
 function App() {
 
@@ -15,6 +16,8 @@ function App() {
         profession: 'Physicist',
         avatarUrl: ''
     });
+
+    const [cards, setCards] = useState([]);
 
     useEffect(() => {
         api.getUserInfo()
@@ -26,6 +29,15 @@ function App() {
                         avatarUrl: userData.avatar
                     }
                 )
+            })
+            .catch((err) => {
+                console.log("Cannot get data from server");
+                console.log(err);
+            });
+
+        api.getInitialCards()
+            .then((cards) => {
+                setCards(cards);
             })
             .catch((err) => {
                 console.log("Cannot get data from server");
@@ -68,13 +80,15 @@ function App() {
         <div className="root">
             <div className="page">
                 <Header/>
-                <userContext.Provider value={currentUser}>
-                    <Main onEditProfile={handleEditProfileClick}
-                          onAddPlace={handleAddPlaceClick}
-                          onEditAvatar={handleEditAvatarClick}
-                          onCardClick={handleCardClick}
-                    />
-                </userContext.Provider>
+                <cardsContext.Provider value={cards}>
+                    <userContext.Provider value={currentUser}>
+                        <Main onEditProfile={handleEditProfileClick}
+                              onAddPlace={handleAddPlaceClick}
+                              onEditAvatar={handleEditAvatarClick}
+                              onCardClick={handleCardClick}
+                        />
+                    </userContext.Provider>
+                </cardsContext.Provider>
                 <Footer/>
                 <PopupWithForm title='Редактировать профиль'
                                name='popup_profile'
