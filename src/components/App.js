@@ -14,7 +14,8 @@ function App() {
     const [currentUser, setCurrentUser] = useState({
         name: 'Jaque',
         profession: 'Physicist',
-        avatarUrl: ''
+        avatarUrl: '',
+        id: ''
     });
 
     const [cards, setCards] = useState([]);
@@ -26,7 +27,8 @@ function App() {
                     {
                         name: userData.name,
                         profession: userData.about,
-                        avatarUrl: userData.avatar
+                        avatarUrl: userData.avatar,
+                        id: userData._id
                     }
                 )
             })
