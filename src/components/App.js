@@ -7,18 +7,9 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import {api} from "../utils/api";
 import {userContext} from "../context/CurrentUserContext";
-import {cardsContext} from "../context/CardsContext";
 
 function App() {
-
-    const [currentUser, setCurrentUser] = useState({
-        name: 'Jaque',
-        profession: 'Physicist',
-        avatarUrl: '',
-        id: ''
-    });
-
-    const [cards, setCards] = useState([]);
+    const [currentUser, setCurrentUser] = useState({});
 
     useEffect(() => {
         api.getUserInfo()
@@ -31,15 +22,6 @@ function App() {
                         id: userData._id
                     }
                 )
-            })
-            .catch((err) => {
-                console.log("Cannot get data from server");
-                console.log(err);
-            });
-
-        api.getInitialCards()
-            .then((cards) => {
-                setCards(cards);
             })
             .catch((err) => {
                 console.log("Cannot get data from server");
@@ -82,15 +64,13 @@ function App() {
         <div className="root">
             <div className="page">
                 <Header/>
-                <cardsContext.Provider value={cards}>
-                    <userContext.Provider value={currentUser}>
-                        <Main onEditProfile={handleEditProfileClick}
-                              onAddPlace={handleAddPlaceClick}
-                              onEditAvatar={handleEditAvatarClick}
-                              onCardClick={handleCardClick}
-                        />
-                    </userContext.Provider>
-                </cardsContext.Provider>
+                <userContext.Provider value={currentUser}>
+                    <Main onEditProfile={handleEditProfileClick}
+                          onAddPlace={handleAddPlaceClick}
+                          onEditAvatar={handleEditAvatarClick}
+                          onCardClick={handleCardClick}
+                    />
+                </userContext.Provider>
                 <Footer/>
                 <PopupWithForm title='Редактировать профиль'
                                name='popup_profile'

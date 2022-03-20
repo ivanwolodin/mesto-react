@@ -1,10 +1,19 @@
 import React from "react";
 
-function Card({card, isOwn, isLiked, onCardClick}) {
+function Card({card, isOwn, isLiked, onCardClick, onCardLike, onCardDelete}) {
 
     function handleClick() {
         onCardClick(card);
     }
+
+    function handleLikeClick(){
+        onCardLike(card);
+    }
+
+    function handleDeleteCard(){
+        onCardDelete(card);
+    }
+
     const cardDeleteButtonClassName = (
         `${isOwn ? 'element__delete-icon' : ''}`
     );
@@ -20,11 +29,11 @@ function Card({card, isOwn, isLiked, onCardClick}) {
                     <div className="element__info" >
                         <h2 className="element__name">{card.name}</h2>
                         <div className="element__like-section">
-                            <button className={`element__like-button ${cardLikedButtonClassName}`}/>
+                            <button className={`element__like-button ${cardLikedButtonClassName}`} onClick={handleLikeClick}/>
                             <div className="element__like-counter"> {card.likes.length}</div>
                         </div>
                     </div>
-                    <div className={cardDeleteButtonClassName}/>
+                    <div className={cardDeleteButtonClassName} onClick={handleDeleteCard}/>
             </article>
         </li>
     );
