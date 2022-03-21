@@ -5,6 +5,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import ImagePopup from "./ImagePopup";
 import {api} from "../utils/api";
 import {userContext} from "../context/CurrentUserContext";
@@ -59,13 +60,36 @@ function App() {
     }
 
     function handleUpdateUser(data) {
-        api.changeUserInfo(data.name, data.about);
-        setCurrentUser({
-            name: data.name,
-            about: data.about,
-            avatarUrl: currentUser.avatarUrl,
-        });
-        closeAllPopups();
+
+        api.changeUserInfo(data.name, data.about)
+            .then((response) => {
+                setCurrentUser({
+                    name: data.name,
+                    about: data.about,
+                    avatarUrl: currentUser.avatarUrl,
+                });
+                closeAllPopups();
+            })
+            .catch((err) => {
+                console.log("Cannot change user data");
+                console.log(err);
+            });
+    }
+
+    function handleAvatarUpdate(data) {
+        api.changeAvatar(data.avatar)
+            .then((response) => {
+                setCurrentUser({
+                    name: currentUser.name,
+                    about: currentUser.about,
+                    avatarUrl: data.avatar,
+                });
+                closeAllPopups();
+            })
+            .catch((err) => {
+                console.log("Cannot change avatar");
+                console.log(err);
+            });
     }
 
     function closeAllPopups() {
@@ -113,21 +137,9 @@ function App() {
                                        </>
                                    }>
                     </PopupWithForm>
-                    <PopupWithForm title='Обновить аватар'
-                                   name='popup_avatar'
-                                   isPopupOpen={isEditAvatarPopupOpen ? "popup_opened" : ""}
-                                   closePopup={closeAllPopups}
-                                   submitButton='Сохранить'
-                                   children={
-                                       <>
-                                           <input className="popup__subtitle popup__subtitle_type_link popup__input"
-                                                  id="avatar-input"
-                                                  type="url"
-                                                  placeholder="Ссылка на аватар" name="link" required/>
-                                           <span className="avatar-input-error"/>
-                                       </>
-                                   }>
-                    </PopupWithForm>
+                    <EditAvatarPopup isOpen={isEditAvatarPopupOpen}
+                                     onClose={closeAllPopups}
+                                     onUpdateAvatar={handleAvatarUpdate}/>
                     <PopupWithForm title='Вы уверены?'
                                    name='popup_delete_card'
                                    closePopup={closeAllPopups}
