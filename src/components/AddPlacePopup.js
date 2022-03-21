@@ -5,6 +5,8 @@ function AddPlacePopup({onClose, isOpen, onAddNewCard}) {
     const [cardName, setCardName] = useState('');
     const [cardLink, setCardLink] = useState('');
 
+    const isPopupOpen = isOpen ? "popup_opened" : ""
+
     useEffect(() => {
         setCardName("");
         setCardLink("");
@@ -30,7 +32,7 @@ function AddPlacePopup({onClose, isOpen, onAddNewCard}) {
     return (
         <PopupWithForm title='Новое место'
                        name='popup_image'
-                       isPopupOpen={isOpen ? "popup_opened" : ""}
+                       isPopupOpen={isPopupOpen}
                        closePopup={onClose}
                        submitButton='Создать'
                        onSubmit={handleSubmit}

@@ -5,10 +5,10 @@ import {userContext} from "../context/CurrentUserContext";
 function EditAvatarPopup({onClose, isOpen, onUpdateAvatar}) {
     const currentUser = useContext(userContext);
     let avatarRef = useRef();
-
+    const isPopupOpen = isOpen ? "popup_opened" : ""
     useEffect(() => {
         avatarRef.current.value = "";
-    }, [currentUser]);
+    }, [isOpen]);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -20,7 +20,7 @@ function EditAvatarPopup({onClose, isOpen, onUpdateAvatar}) {
     return (
         <PopupWithForm title='Обновить аватар'
                        name='popup_avatar'
-                       isPopupOpen={isOpen ? "popup_opened" : ""}
+                       isPopupOpen={isPopupOpen}
                        closePopup={onClose}
                        submitButton='Сохранить'
                        onSubmit={handleSubmit}

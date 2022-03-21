@@ -35,9 +35,7 @@ function App() {
                 console.log("Cannot get data from server");
                 console.log(err);
             });
-    }, []);
 
-    useEffect(() => {
         api.getUserInfo()
             .then((userData) => {
                 setCurrentUser(
@@ -70,7 +68,9 @@ function App() {
 
     function handleDeleteCard(card) {
         api.deleteCard(card._id).then((response) => {
-            setCards(cards.filter(item => item._id !== card._id));
+            if (response.message === 'Пост удалён') {
+                setCards(cards.filter(item => item._id !== card._id));
+            }
         })
             .catch((err) => {
                 console.log("Cannot handle card deleting");
@@ -97,7 +97,6 @@ function App() {
     function handleAddPlaceSubmit(data) {
         api.addNewCard(data.cardName, data.cardLink)
             .then((response) => {
-                console.log(response)
                 setCards([response, ...cards]);
                 closeAllPopups();
             })
@@ -166,7 +165,7 @@ function App() {
                                       onClose={closeAllPopups}
                                       onUpdateUser={handleUpdateUser}
                     />
-                    <AddPlacePopup isOpen={isAddPlacePopupOpen ? "popup_opened" : ""}
+                    <AddPlacePopup isOpen={isAddPlacePopupOpen}
                                    onClose={closeAllPopups}
                                    onAddNewCard={handleAddPlaceSubmit}
                     />
